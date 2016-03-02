@@ -1,0 +1,11 @@
+package solutions;
+import java.io.*;
+public class timeConversion {
+
+	public static void main(String args[])throws IOException{
+		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		String time  = input.readLine();
+		String flag = time.substring(8);
+		System.out.println(flag);
+	}
+}
