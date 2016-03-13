@@ -1,0 +1,1 @@
+exec("print(4294967295-input());"*input())
