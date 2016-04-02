@@ -1,12 +1,21 @@
-M = 10**6 + 1
-primes = [1] * M
-primes[0] = 0
-primes[1] = 0
 
-for i in xrange(4, M, 2):
-	primes[i] = 0
-for i in xrange(3, int(sqrt(M)+1), 2):
-	if (primes[i]):
-		for j in xrange(i*i, M, i):
-			primes[i] = 0
+def primeF(n):
+	a = []
+	if not n%2:
+		a.append(2)
+		while not n%2:
+			n /= 2
+	b = 3
+	if n == 1: return a
+	while b * b <= n:
+		if not n%b:
+			a.append(b)
+			while not n%b:
+				n /= b
+		b += 2
+	a.append(n)
+	return max(a)
 
+
+for _ in xrange(input()):
+	print primeF(input())

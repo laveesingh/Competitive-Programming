@@ -19,6 +19,7 @@ def segmented_sieve(m, n):
 	primes = [0]*(n-m)
 	if m < 2: primes[0] = 1
 	sqprime = primes_upto_sqrt(n) # Primes upto square root of upper limit
+	print "sqprime: ", sqprime
 	for s in sqprime:
 		#print "S: ",s,
 		start = (m/s)*s + s
@@ -30,6 +31,7 @@ def segmented_sieve(m, n):
 			#print i,
 			primes[i-m] = 1
 		#print
+	print "primes",primes
 	for i in xrange(len(primes)):
 		if not primes[i] :
 			#print i+m

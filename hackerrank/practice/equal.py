@@ -1,46 +1,19 @@
 
-
-def diff(a, n):
-	ans = 0
-	n -= a
-	ans += n/5
-	n %= 5
-	if n:
-		ans += n/2
-		n %= 2
-		ans += n
-	return ans
-
-
-def solve(a):
-	
-	ans = 0
-	if (1 in a) and (5 in a or 10 in a):
-		for i in xrange(len(a)):
-			if a[i]== 1:
-				ans += 1
-				a[i] = 0
-
-	if (2 in a) and (5 in a or 10 in a):
-		for i in xrange(len(a)):
-			if a[i]== 2:
-				ans += 1
-				a[i] = 0
-
-	mini = min(a)
-	for s in a:
-		ans += diff(mini, s)
-	return ans
-
-def solve2(a):
-	
-	ans = 0
-	mini = min(a)
-	for s in a:
-		ans += diff(mini, s)
-	return ans
+def solve(a, n):
+	m = min(a)
+	r = 10**10
+	for t in xrange(m-4, m+1):
+		s = 0
+		for i in xrange(n):
+			d = a[i] - t
+			s += d/5
+			d %= 5
+			s += d/2
+			d %= 2
+			s += d
+		r = min(r, s)
+	return r
 
 for _ in xrange(input()):
 	n = input()
-	a = map(int, raw_input().split())
-	print min(solve(a), solve2(a))
+	print solve(map(int, raw_input().split()), n)		
