@@ -1,3 +1,4 @@
+from fractions import gcd
 
 def solve(d, m, r):
 	for i in xrange(len(m)):
@@ -13,4 +14,3 @@ ans = 0
 
 for day in xrange(1000000):
 	ans += 1 if solve(day, m, r) else 0
-print "0.%d"%ans
