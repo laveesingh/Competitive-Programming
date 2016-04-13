@@ -24,7 +24,6 @@ for x in A:
 	if x in spanish:
 		print 's'
 		s += spanish[x]
-	
 		
 #print g,f,s
 if (g==0 and s==0 and f==0):
