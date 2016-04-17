@@ -32,41 +32,52 @@
 # 6 
 # 4
 
-def solve():
-	n, c = map(int, raw_input().split())
-	points = []
-	for _ in xrange(n):
-		points.append(input())
-	points.sort()
-	distance = []
-	distance.append(0)
-	for i in xrange(1,len(points)):
-		distance.append(points[i]-points[i-1])
-	print "points:",points
-	print "distance:",distance
-	lo = min(distance) # lower bound of the distance
-	hi = sum(distance) # upper bound of the distance
-	print "lo:",lo,"hi:",hi
-	mins = []
-	while lo < hi:
-		x = lo + (hi-lo)/2
-		print "x:",x
-		req = 1 # required cows
-		curl = 0 # current distance
+import sys
 
-		for i in xrange(n):
-			if curl + distance[i] <= x:
-				curl += distance[i]
-			else:
-				req += 1
-				curl = distance[i]
-		if req == c:
-			mins.append(x)
-			hi = x
-		elif req < c:
-			hi = x
+def fits(a, n):
+	cows = 1;
+	dist = 0
+	for i in xrange(1, len(a)):
+		dist += a[i]-a[i-1]
+		if dist >= n:
+			cows += 1
+			dist = 0
+			if cows == c:
+				# print "fits -> a:",a,"n:",n
+				return 1
+	return 0
+
+def solve(a, n, c):
+	a.sort()
+	low = 0
+	high = a[-1]
+	mx = -1
+	while low < high:
+		cur = low + (high-low)/2
+		if (fits(a, cur)):
+			if cur > mx:
+				mx = cur
+			low = cur + 1
 		else:
-			lo = x + 1
-	return max(lo, max(mins))
+			high = cur 
 
-print solve()
+	return mx
+
+	
+
+
+inputs = sys.stdin.read().split("\n")
+i = 1
+for _ in xrange(int(inputs[0])):
+	# n, c = map(int, raw_input().split())
+	n, c = map(int, inputs[i].split())
+	i += 1
+	a = []
+	for __ in xrange(n):
+		a.append(int(inputs[i]))
+		i += 1
+	print solve(a, n, c)
+
+
+
+
