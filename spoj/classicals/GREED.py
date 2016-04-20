@@ -18,3 +18,4 @@ def solve(a, n):
 		x, y = map(int,raw_input().split())
 		graph[x] = y
 		graph[y] = x
+	dist = defaultdict(

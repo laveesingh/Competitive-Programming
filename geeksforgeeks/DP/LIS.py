@@ -1,3 +1,13 @@
+### Following is the naive recursive solution
+
+def solve(a, n):
+	if n == 0 or n == 1: return n
+	temp = []
+	for j in xrange(n-1):
+		if a[j] < a[n-1]:
+			temp.append()
+
+
 ### Following is a O(n^2) solution
 def lis(a):
 	n = len(a)
@@ -32,4 +42,5 @@ def lis2(a):
 					break
 	return max(d.keys())
 
-print lis2(map(int, raw_input().split()))
+a = map(int, raw_input().split(','))
+print solve(a, len(a))
