@@ -13,7 +13,7 @@ def solve(n, m):
 		s  = list(s)
 		cur = [[s[i] for i in xrange(j,j+m)] for j in xrange(0,len(s),m)]
 		if ishumble(cur, n,m):
-			print "humble:",cur
+			# print "humble:",cur
 			ans += 1
 	print ans
 

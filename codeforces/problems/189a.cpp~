@@ -1,0 +1,28 @@
+#include <algorithm>
+#include <iostream>
+#include <map>
+
+using namespace std;
+
+int max(int a, int b, int c){
+	return max(max(a,b),c);
+}
+
+int min(int a, int b, int c){
+	return min(min(a,b),c);
+}
+
+map <int, int> store;
+int a, b, c;
+int solve(int n){
+	
+}
+
+int main(void){
+	int n, ca, cb, cc;
+	cin >> n >> ca >> cb >> cc;
+	a = max(ca,cb,cc);
+	c = min(ca,cb,cc);
+	b = ca+cb+cc-a-c;
+	cout << solve(n) << endl;
+}
