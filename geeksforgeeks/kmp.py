@@ -17,5 +17,3 @@ def lps(a):
 				i += 1
 	return arr
 
-txt = raw_input()
-print lps(txt)
