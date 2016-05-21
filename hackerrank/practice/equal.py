@@ -1,4 +1,3 @@
-
 def solve(a, n):
 	m = min(a)
 	r = 10**10
