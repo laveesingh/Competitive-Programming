@@ -16,4 +16,4 @@ for _ in range(int(t)):
 	fibn1 = fib(n+1)
 	x = 1+fibosum(m-n)
 	y = fibosum(m-n+1)
-	print (x*fibn + y*fibn1)%MOD
+	print((x*fibn + y*fibn1)%MOD)
