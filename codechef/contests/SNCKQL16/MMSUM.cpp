@@ -43,7 +43,7 @@ int main(void){
 			}
 			if (cur != 0) b.push_back(cur);
 
-			Print(b);
+			
 		}
 
 	}
