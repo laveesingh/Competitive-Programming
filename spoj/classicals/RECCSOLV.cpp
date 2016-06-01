@@ -41,7 +41,8 @@ matrix power(matrix a, int p){
 	if (p%2){
 		return mult(a, power(a,p-1));
 	}
-	return mult(power(a,p/2), power(a,p/2));
+	matrix X = power(a,p/2);
+	return mult(X, X);
 }
 
 void scanner(string a){
@@ -119,18 +120,8 @@ ll fib(int n){
 	// 	}
 	// 	cout << endl;
 	// }
-	ll res = 0;
-	for (int i = 0; i < k; i += 1){
-		res = 0;
-		for (int j = 0; j < k; j += 1){
-			res += T[i][j]*V[j];
-		}
-		store[n-i] = res;
-		// res += T[0][i]*V[i];
-	}
-	// store[n] = res;
-	// return res;
-	return store[n];
+	
+	return T[0][0];
 
 }
 
@@ -160,3 +151,18 @@ int main(void){
 		printf("%lld\n", fib(n));
 	}
 }
+
+/*f(n) = 2f(n-1) + 3f(n-3) + 4f(n-6)
+0 1 2 3 4 5
+5
+234
+5342
+266666
+999999
+1*/
+
+// def case():
+//  n = randint(1,100)
+//  print n
+//  for _ in xrange(n):
+//   print randint(0,4294967296)

@@ -1,49 +1,58 @@
+
 from collections import defaultdict, deque
+import sys
 
-def process(a, i, j, n, m): # assumption that i, j has not been visited yet
-	visited = defaultdict(tuple) # tuple of isvisited and weight
-	queue = deque()
-	visited[(i,j)] = (1,0)
-	queue.append((i,j))
-	count = 0
-	while 1:
-		count += 1
-		if count > 1000000:
-			print "This is wrong"
-			break
-		ci, cj = queue.popleft()
-		cw = visited[(ci, cj)][1]
-		if ci >= n or cj >= m: continue
-		# print "ci:",ci,"cj:",cj
-		try:
-			if ci < n and cj < m and a[ci][cj] == '1':
-				return cw
-		except IndexError: 
-			print "Error:", ci,cj
-		cons = [(ci+1, cj), (ci, cj+1), (ci-1, cj), (cj, cj-1)]
-		bools = [ci == n-1, cj == m-1, ci == 0, cj == 0]
-		for i in xrange(len(bools)):
-			if not bools[i]:
-				# print "ci:",ci,"cj:",cj,"appending:",cons[i]
-				queue.append(cons[i])
-				visited[cons[i]] = (1,cw+1)
+matrix = None
 
-t = int(raw_input())
-for _ in xrange(t):
-	n, m = map(int, raw_input().split())
+def bfs(i, j, a):
+	global matrix
+	n = len(a)
+	m = len(a[0])
+	# print "BFS for ",i,j
+	indq = deque()
+	indq.append((i,j,0))
+	visited = defaultdict(int)
+	visited[(i,j)] = 1
+	while indq:
+		cur = indq.popleft()
+		x, y,c = cur[0],cur[1],cur[2]
+		matrix[x][y] = min(matrix[x][y], c)
+		indlist = [(x+1,y,c+1),(x-1,y,c+1),(x,y+1,c+1),(x,y-1,c+1)]
+		for index in indlist:
+			if not visited[(index[0],index[1])] and index[0] >= 0 and index[0] < n and index[1] >= 0 and index[1] < m and a[index[0]][index[1]]!='1':
+				# print "appending...",index
+				indq.append(index)
+				visited[(index[0],index[1])] = 1
+
+def solve(a, n, m):
+	n = len(a)
+	m = len(a[0])
+	indo = []
+	global matrix
+	matrix = [[1024 for j in xrange(len(a[0]))] for i in xrange(len(a))]
+	for i in xrange(len(a)):
+		for j in xrange(len(a[i])):
+			# try:
+				if a[i][j] == '1':
+					indo.append((i,j))
+			# except:
+			# 	print "error for",i,j
+	for i, j in indo:
+		bfs(i,j,a)
+
+I = lambda : map(int, raw_input().split())
+
+def main():
+	n, m = I()
 	a = []
-	b = [[0 for i in xrange(m)] for j in xrange(n)]
 	for i in xrange(n):
 		a.append(raw_input())
-	for i in xrange(n):
-		for j in xrange(m):
-			b[i][j] = process(a, i, j, n, m)
-	for s in b:
-		for x in s:
-			print x,
+	solve(a,n,m)
+	# print matrix
+	for s in matrix:
+		for t in s:
+			print t,
 		print
 
-
-
-
-
+for _ in xrange(input()):
+	main()
