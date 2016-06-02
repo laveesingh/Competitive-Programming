@@ -3,6 +3,8 @@
 #include <cmath>
 #include <regex>
 #include <map>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,22 +12,22 @@ typedef long long ll;
 
 typedef vector<vector<ll>> matrix;
 
-#define MOD (int)pow(10,9)+9
-#define F(i,n) for (int i = 0; i < n; i += 1)
+#define MOD (ll)pow(10,9)+9
+#define F(i,n) for (ll i = 0; i < n; i += 1)
 
-map<int, int> coeff;
-int k;
-vector<int> bases;
-map<int, ll> store;
+map<ll, ll> coeff;
+ll k;
+vector<ll> bases;
+map<ll, ll> store;
 
 matrix mult(matrix a, matrix b){
 	matrix c(k, vector<ll>(k));
 
 	F(i,k) F(j,k) c[i][j]=0;
 
-	for (int i = 0; i < k; i += 1){
-		for (int j = 0; j < k; j += 1){
-			for (int x = 0; x < k; x += 1){
+	for (ll i = 0; i < k; i += 1){
+		for (ll j = 0; j < k; j += 1){
+			for (ll x = 0; x < k; x += 1){
 				c[i][j] += a[i][x]*b[x][j];
 				c[i][j] %= MOD;
 			}
@@ -36,7 +38,7 @@ matrix mult(matrix a, matrix b){
 	return c;
 }
 
-matrix power(matrix a, int p){
+matrix power(matrix a, ll p){
 	if (p == 1) return a;
 	if (p%2){
 		return mult(a, power(a,p-1));
@@ -48,9 +50,9 @@ matrix power(matrix a, int p){
 void scanner(string a){
 	k = 0;
 	string temp = "";
-	int cof, kt;
+	ll cof, kt;
 	bool flag = false;
-	int i = 7;
+	ll i = 7;
 	if (a[i]=='-') flag = true;
 	while ( i < a.length()){
 		if (a[i] == 'f'){
@@ -75,30 +77,33 @@ void scanner(string a){
 
 }
 
-void Print(matrix T){
-	for (int i = 0; i < k; i += 1){
-		for (int j = 0; j < k; j += 1){
+void Prll(matrix T){
+	for (ll i = 0; i < k; i += 1){
+		for (ll j = 0; j < k; j += 1){
 			cout << T[i][j] << " ";
 		}
 		cout << endl;
 	}
 }
 
+bool iscur = false;
+ll last;
+matrix cur;
 
-ll fib(int n){
+ll fib(ll n){
 	if (store[n]) return store[n];
 	if (n < k) return bases[n];
 	n = n-k+1;
-	vector<int> V(k);
-	for (int i = 0; i < k; i += 1){
+	vector<ll> V(k);
+	for (ll i = 0; i < k; i += 1){
 		V[i] = bases[k-i-1];
 	}
 	matrix T(k, vector<ll>(k));
-	for (int i = 0; i < k; i += 1){
+	for (ll i = 0; i < k; i += 1){
 		T[0][i] = coeff[i+1];
 	}
-	for (int i = 1; i < k; i += 1){
-		for (int j = 0; j < k; j += 1){
+	for (ll i = 1; i < k; i += 1){
+		for (ll j = 0; j < k; j += 1){
 			if (j == i-1){
 				T[i][j] = 1;
 			}else{
@@ -106,16 +111,22 @@ ll fib(int n){
 			}
 		}
 	}
-	T = power(T, n);
+	if (iscur == false){
+		T = power(T, n);
+		cur = T;
+		last = n;
+	}else{
+		T = mult(cur, power(T, n-last));
+	}
 	// cout << "Power 1:"<<endl;
-	// Print(power(T,1));
+	// Prll(power(T,1));
 	// cout << "Power 2:"<<endl;
-	// Print(power(T,2));
+	// Prll(power(T,2));
 	// cout << "Power 3:"<<endl;
-	// Print(power(T,3));
+	// Prll(power(T,3));
 
-	// for (int i = 0; i < k; i += 1){
-	// 	for (int j = 0; j < k; j += 1){
+	// for (ll i = 0; i < k; i += 1){
+	// 	for (ll j = 0; j < k; j += 1){
 	// 		cout << T[i][j] << " ";
 	// 	}
 	// 	cout << endl;
@@ -125,30 +136,54 @@ ll fib(int n){
 
 }
 
+// vector<ll> queries;
+// vector<ll> answers;
 
+vector<ll> sorted(vector<ll> a){
+	sort(a.begin(), a.end());
+	return a;
+}
 
 
 int main(void){
 	string a;
-	int temp, t, n;
+	ll temp, t, n;
 	char tempar[200];
 	// scanf("%s", tempar);
 	getline(cin, a);
 	// gets(tempar);
 	// a = tempar;
 	scanner(a);
-	for (int i = 0; i < k; i += 1){
+	for (ll i = 0; i < k; i += 1){
 		// cin >> temp;
-		scanf("%d", &temp);
+		scanf("%lld", &temp);
 		bases.push_back(temp);
 	}
 	// cin >> t;
-	scanf("%d", &t);
-	for (int i = 0; i < t; i += 1){
+
+	scanf("%lld", &t);
+	vector<ll> queries(t);
+		for (ll i = 0; i < t; i += 1){
 		// cin >> n;
-		scanf("%d", &n);
+		scanf("%lld", &queries[i]);
 		// cout << fib(n) << endl;
-		printf("%lld\n", fib(n));
+	}
+	vector<ll> sorted(queries.begin(), queries.end());
+	sort(sorted.begin(), sorted.end());
+	map<ll,ll> answers;
+	for (ll i = 0; i < t; i += 1){
+		// printf("%lld\n", fib(queries[i]));
+		// cout << "finding for " << queries[i] << endl;
+		if (answers[sorted[i]]){
+			// do nothing
+		}else{
+
+			answers[sorted[i]] = fib(sorted[i]);
+			// printf("%lld\n",fib(sorted[i]));
+		}
+	}
+	for (ll query: queries){
+		printf("%lld\n", answers[query]);
 	}
 }
 
@@ -162,7 +197,7 @@ int main(void){
 1*/
 
 // def case():
-//  n = randint(1,100)
-//  print n
+//  n = 10000
+//  prll n
 //  for _ in xrange(n):
-//   print randint(0,4294967296)
+//   prll randll(0,4294967296)

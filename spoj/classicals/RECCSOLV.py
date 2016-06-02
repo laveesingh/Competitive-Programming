@@ -70,7 +70,9 @@ process_raw(a)
 bases = map(int, inputs[1].split())
 q = int(inputs[2])
 l = inputs[4:]
-ans = [0]*len(l)
+ans = []
 for i in xrange(len(l)):
-	ans[i] = fib(int(l[i]))
+	if l[i]:
+		print "solving for ",l[i]
+		ans.append(str(fib(int(l[i]))))
 print '\n'.join(ans)
