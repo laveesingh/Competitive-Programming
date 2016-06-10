@@ -73,7 +73,7 @@ int main(void){
 			visited[it-visited.begin()] = 1;
 			if (!dfs((it-visited.begin()), graph, visited)){
 				// cout << "Suspicious bugs found!" << endl;
-				printf("Suspecious bugs found!\n");
+				printf("Suspicious bugs found!\n");
 				done = true;
 				break;
 			}else{

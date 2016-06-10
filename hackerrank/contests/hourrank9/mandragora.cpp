@@ -23,13 +23,14 @@ int *h;
 // 	// return store[mp(n,p)] = max(x, y);
 // }
 
-int solve(int n, int s = 1, int p = 0){
-	int dp[n+1];
-	dp[0] = 0;
-	for (int i = 1; i <= n; i += 1){
-		dp[i] = max(dp[i]+s*h[i-1]);
-	}
-}
+// int solve(int n, int s = 1, int p = 0){
+// 	int dp[n+1];
+// 	dp[0] = 0;
+// 	for (int i = 1; i <= n; i += 1){
+// 		dp[i] = max(dp[i]+s*h[i-1],);
+
+// 	}
+// }
 
 int main(void){
 	int t;
