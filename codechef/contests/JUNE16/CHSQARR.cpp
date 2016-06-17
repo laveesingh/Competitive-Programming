@@ -1,16 +1,19 @@
-#include <bits/stdc++.h>
+// #include <bits/stdc++.h>
+#include <cstdio>
 
 using namespace std;
 
-#define p(n) (int)pow(2, n)
-#define pii pair<int,int>
-#define mp make_pair
 #define INF 1000000000
 
 int **matrix;
 int **sum;
 int M[1000][1000][10][10];
 int n, m;
+
+int max(int a, int b){
+	if (a >= b) return a;
+	return b;
+}
 
 int max(int a, int b, int c, int d){
 	return max(max(a,b), max(c,d));
@@ -119,6 +122,7 @@ int main(void){
 	precompute_sum();
 	precompute_max();
 	// cout << "Max in the given bounds is " << compute_max(0, 0, 6, 1) << endl;
+	cout << "Done precomputing" << endl;
 	scanf("%d", &q);
 	for (int i = 0; i < q; i += 1){
 		scanf("%d %d", &x, &y);

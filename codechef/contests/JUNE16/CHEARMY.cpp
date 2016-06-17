@@ -1,16 +1,12 @@
-#include <iostream>
-#include <deque>
-#include <vector>
-#include <cstring>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define ull unsigned long long
+#define ll long long
 
-// ull store = {0, 5, 20, 100, 500, 2500 , 12500 , 62500 , 312500 , 1562500 , 7812500 , 39062500, 195312500};
+// ll store = {0, 5, 20, 100, 500, 2500 , 12500 , 62500 , 312500 , 1562500 , 7812500 , 39062500, 195312500};
 
-// ull mod(ull n, ull m){
+// ll mod(ll n, ll m){
 // 	if(n == m) return n;
 // 	return n%m;
 // }
@@ -18,7 +14,7 @@ using namespace std;
 string mod_store[] = {"8", "0", "2", "4", "6"};
 
 
-void solve(ull n){
+void nth(ll n){
 	string ans = "";
 	if (n < 5) {
 		cout << mod_store[n] << endl;
@@ -26,7 +22,7 @@ void solve(ull n){
 	}
 	while (n > 4){
 		// cout << "Now the value of n is : " << n << endl;
-		ull cur = n%5;
+		ll cur = n%5;
 		// ans.push_front(mod_store[cur]);
 		ans = mod_store[cur]+ans;
 		if(n%5 == 0){
@@ -47,9 +43,9 @@ int main(void){
 	int t;
 	cin >> t;
 	while(t--){
-		ull n;
+		ll n;
 		cin >> n;
-		solve(n);	
+		nth(n);	
 	}
 
 }

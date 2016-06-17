@@ -1,64 +1,110 @@
 #include <iostream>
-#include <algorithm>
+#include <cstdio>
 
 using namespace std;
+#define INF 100000000
 
-#define MAX 70000
-
-struct no{
-	int lsum, rsum, msum;
+class Node{
+public:
+	int maxsum, totalsum, lsum, rsum;
+	Node(){}
+	Node(int a, int b, int c, int d){
+		maxsum = a;
+		totalsum = b;
+		lsum = c;
+		rsum = d;
+	}
 };
 
-int array[MAX+1], sums[MAX+1];
+Node T[200000];
+int *A, n;
 
-no tree[4*MAX+1];
 
-void init(int node, int i, int j){
-	if (i == j){
-		tree[node] = (no){array[i],array[i],array[i]};
+Node add(Node a, Node b){
+	int maxsum = a.maxsum;
+	maxsum = max(maxsum, b.maxsum);
+	maxsum = max(maxsum, a.rsum+max(b.totalsum, b.lsum));
+	maxsum = max(maxsum, b.lsum+max(a.totalsum, a.rsum));
+	maxsum = max(maxsum, a.totalsum+b.totalsum);
+	int lsum = max(a.lsum, a.totalsum+b.lsum);
+	int rsum = max(b.rsum, b.totalsum+a.rsum);
+	int totalsum = a.totalsum+b.totalsum;
+	return Node(maxsum, totalsum, lsum, rsum);
+}
+
+
+void build(int node, int i, int j){
+	// cout << "Looking to build for node= " << node << " and i= "<< i << " and j= " << j << endl;
+	if(i == j){
+		T[node] = Node(A[i], A[i], A[i], A[i]);
+		// cout << "Setting for i = " << i << " the value = " << T[i].maxsum << " at node = " << node << endl;
 	}else{
-		init(node*2, i, (i+j)/2);
-		init(node*2+1, (i+j)/2 + 1, j);
-		no left = tree[node*2];
-		no right = tree[node*2+1];
-		tree[node].lsum = max(left.lsum, sums[(i+j)/2]-sums[i-1]+right.lsum);
-		tree[node].rsum = max(right.rsum, sums[j]-sums[(i+j)/2]+left.rsum);
-		tree[node].msum = max(left.msum, max(right.msum, right.lsum+left.rsum));
+		build(2*node, i, (i+j)/2);
+		build(2*node+1, (i+j)/2+1, j);
+		T[node] = add(T[2*node], T[2*node+1]);
+		// cout << "For i = " << i << " Setting the value = " << T[i].maxsum << " at node = " << node << endl;
 	}
+	// cout << "Tree till now is: ";
+	// for (int i = 0; i < 20; i += 1){
+	// 	cout << T[i].maxsum << " ";
+	// }
+	// cout << endl;
 }
 
-no query(int node, int a, int b, int i, int j){
+
+
+Node query(int node, int a, int b, int i, int j){
+	// cout << "Querying node= " << node << " a= " << a << " b= " << b << " i= " << i << " j= " << j << " ";
+	// if (i < a || j > b){
+	// 	return Node(-INF, -INF, -INF, -INF);
+	// }
 	if(a == i && b == j){
-		return tree[node];
-	}else if(j <= (a+b)/2){
-		return query(node*2, a, (a+b)/2, i, j);
-	}else if(i > (a+b)/2){
-		return query(node*2+1, (a+b)/2+1,b,i,j);
+		// cout << "Returning: " << T[node].maxsum << endl;
+		return T[node];
 	}
-	no left = query(node*2, a, (a+b)/2, i, (a+b)/2);
-	no right = query(node*2+1,(a+b)/2+1, b, (a+b)/2+1, j);
-	return (no){
-		max(left.lsum, sums[(a+b)/2]-sums[i-1]+right.lsum),
-		max(right.rsum, sums[b]-sums[(a+b)/2]+left.rsum),
-		max(left.msum, max(right.msum, left.rsum+right.lsum))
-	};
+	if(j <= (a+b)/2){
+		Node ans = query(2*node, a, (a+b)/2, i, j);
+		// cout << "Returning: " << ans.maxsum << endl;
+		return ans;
+	}else if(i > (a+b)/2){
+		Node ans = query(2*node+1, (a+b)/2+1, b, i, j);
+		// cout << "Returning " << ans.maxsum << endl;
+		return ans;
+	}
+	Node left = query(2*node, a, (a+b)/2, i, (a+b)/2);
+	Node right = query(2*node+1, (a+b)/2+1, b, (a+b)/2+1, j);
+	// cout << "Returning " << add(left,right).maxsum << endl;
+	return add(left, right);
 }
 
-
+int query(int x, int y){
+	Node cur =  query(1, 0, n-1, x, y);
+	return cur.maxsum;
+}
 
 int main(void){
-	int n, q, l, r;
+	// cin >> n;
 	scanf("%d", &n);
-	scanf("%d",&array[0]);
-	sums[0] = array[0];
-	for(int i = 1; i < n; i += 1){
-		scanf("%d",&array[i]);
-		sums[i] = sums[i-1]+array[i];
+	A = new int[n];
+	for (int i = 0; i < n; i += 1){
+		// cin >> A[i];
+		scanf("%d", &A[i]);
 	}
-	init(1, 0, n-1);
+	// cout << "building segment tree" << endl;
+	build(1, 0, n-1);
+	// cout << "Built the segment tree" << endl;
+	int q, x, y;
+	// cout << "Here's the tree"  << endl;
+	// for (int i = 0; i < 4*n; i += 1){
+	// 	cout << T[i].maxsum << " " ;
+	// }
+	// cout << endl;
+	// cin >> q;
 	scanf("%d", &q);
-	for (int i = 0; i < q; i += 1){
-		scanf("%d %d", &l, &r);
-		printf("%d\n", query(1,0,n-1,l-1,r-1).msum);
+	while(q--){
+		// cin >> x >> y;
+		scanf("%d %d", &x, &y);
+		printf("%d\n", query(x-1, y-1));
+		// cout << query(x-1, y-1) << endl;
 	}
 }
