@@ -1,31 +1,21 @@
-#include <iostream>
+#include <cstdio>
 
 using namespace std;
 
-long long solve(long long n){
-	long long l3, l5, l15;
-	long long s1, s2, s3;
-	//n = 1;
-	l3 = n/3;
-	if (n%3 == 0) l3 -= 1;
-	l5 = n/5;
-	if (n%5 == 0) l5 -= 1;
-	l15 = n/15;
-	if (n%15 == 0) l15 -= 1;
-	s1 = (l3*(l3+1))/2;
-	s1 *= 3;
-	s2 = (l5*(l5+1))/2;
-	s2 *= 5;
-	s3 = (l15*(l15+1))/2;
-	s3 *= 15;
-	return (s1+s2-s3);
-}
+#define sc(n) scanf("%lld", &n)
+
+typedef long long ll;
 
 int main(void){
-	long long t, n;
-	cin >> t;
-	while (t--){
-		cin >> n;
-		cout << solve(n) << endl; 
+	ll t;
+	sc(t);
+	while(t--){
+		ll n;
+		sc(n);
+		n -= 1;
+		ll x = n/3, y = n/5, z = n/15;
+		ll ans = 3*((x*(x+1))/2) + 5*((y*(y+1))/2) - 15*((z*(z+1))/2);
+		printf("%lld\n", ans);
 	}
+
 }

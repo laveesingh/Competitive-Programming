@@ -1,97 +1,66 @@
-#include <iostream>
-#include <stdio.h>
-#include <math.h>
+#include <cstdio>
+#include <cmath>
 #include <algorithm>
-// #include <string.h>
 
 using namespace std;
 
-#define limit 10000001
-
-#define input(a,n) for(int i = 0; i < n; i += 1) scanf("%d", &a[i]);
-#define isvalid(i,j,n) (i>=0&&i<n&&j>=0&&j<n)
-
-
+const int limit = 10000001;
 int isprime[limit];
-int howmanyprimes[limit];
-int **a,**visited;
-int X[] = {-1, 0, 1, 0};
-int Y[] = {0, 1, 0, -1};
+int dpprime[limit];
+int **a, **visited;
 
-void set_primes(){
+#define sc(n) scanf("%d", &n)
+#define F(i,n) for(int i = 0; i < n; i += 1)
+#define even(n)  (!isprime[n] && n%2 == 0)
+#define odd(n)  (!isprime[n] && !even(n))
+#define ustries(n) (isprime[n] ? dpprime[n]-1 : (even(n) ? n/2 : (n+3)/2))
+
+void sieve(){
 	fill_n(isprime, limit, 1);
-	isprime[0] = 0;
-	isprime[1] = 0;
-	
-	for(int i = 4; i < limit; i += 2){
+	isprime[0] = isprime[1] = 0;
+	for (int i = 4; i < limit; i += 2){
 		isprime[i] = 0;
 	}
 	for (int i = 3; i < sqrt(limit)+1; i += 2){
-		if(isprime[i]){
-			for(int j = i*i; j < limit; j += i){
+		if (isprime[i]){
+			for(int j = i*i; j < limit; j += 2*i){
 				isprime[j] = 0;
 			}
 		}
 	}
-	howmanyprimes[0] = howmanyprimes[1] = 0;
-	howmanyprimes[2] = 0;
-	for (int i = 3; i < limit; i += 1){
-		howmanyprimes[i] = howmanyprimes[i-1]+isprime[i];
+	dpprime[0]=dpprime[1] = 0;
+	for (int i = 2; i < limit; i += 1){
+		dpprime[i] = isprime[i] ? dpprime[i-1]+1 : dpprime[i-1];
 	}
 }
 
-void bfs(int i, int j,int n){
-	// cout << "Doing bfs for: " << i  << " " << j << endl;
-	visited[i][j] = 1;
-	for (int k = 0; k < 4; k += 1){
-		if(isvalid(i+X[k],j+Y[k],n) && !(visited[i+X[k]][j+Y[k]])&& (a[i+X[k]][j+Y[k]]%2 == a[i][j]%2) && !(isprime[a[i+X[k]][j+Y[k]]])){
-			// cout << a[i+X[k]][j+Y[k]] << " is equal in parity to " << a[i][j] << endl; 
-			bfs(i+X[k], j+Y[k], n);
-		}	
-	}
+void dfs(int i, int j){
+
 }
 
 int main(void){
-	set_primes();
-	int t, n;
-	scanf("%d", &t);
+	sieve();
+	int t;
+	sc(t);
 	while(t--){
-		scanf("%d", &n);
+		int n;
+		sc(n);
 		a = new int*[n];
 		visited = new int*[n];
-		for (int j = 0; j < n; j += 1){
-			a[j] = new int[n];
-			visited[j] = new int[n];
-			fill_n(visited[j], n, 0);
-			input(a[j],n);
+		F(i,n) {
+			a[i] = new int[n];
+			visited[i] = new int[n];
 		}
-		int wtries = 0;
-		for (int i = 0; i < n; i += 1){
-			for (int j = 0; j < n; j += 1){
+		F(i,n) F(j,n) sc(a[i][j]);
+		long long ans = 0;
+		F(i,n){
+			F(j,n){
 				if(!visited[i][j]){
-					if(isprime[a[i][j]]){
-						int toincrease = howmanyprimes[a[i][j]];
-						// cout << "Increased " << toincrease <<" at " << i << " " << j << endl;
-						wtries += toincrease;
-					}else{
-						int toincrease = (a[i][j]%2 ? (a[i][j]+3)/2 : a[i][j]/2);
-						// cout << "Increased " << toincrease <<" at " << i << " " << j << endl;
-						wtries += toincrease;
-						bfs(i,j,n);
-					}
+					visited[i][j] = 1;
+					ans += ustries(a[i][j]);
+					dfs(i,j);
 				}
 			}
-		}		
-		printf("%d\n", wtries);
+		}
 	}
-
 }
-
-// def case():
-// 	n = randint(1,5)
-// 	print n
-// 	for i in xrange(n):
-// 		for j in xrange(n):
-// 			print randint(0,10),
-// 		print
-// 	
