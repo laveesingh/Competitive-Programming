@@ -1,15 +1,18 @@
 a, b, c, d = map(int, raw_input().split())
 
-x = float(a-c)/float(d-b)
-
-if b <= d:
+if b == d:
 	print "NO"
-elif x%1 == 0 and x > 0:
-	print x
-	print "YES"
-	print a+x*b,c+x*d
 else:
-	print "NO"
+	x = float(a-c)/float(d-b)
+
+	if b <= d:
+		print "NO"
+	elif x%1 == 0 and x > 0:
+		# print x
+		print "YES"
+		# print a+x*b,c+x*d
+	else:
+		print "NO"
 
 # def case():
 # 	a = randint(0,99)
