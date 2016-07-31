@@ -1,0 +1,9 @@
+import random
+
+def case():
+	n = random.randint(1,100)
+	print n
+	for  _ in xrange(n):
+		print random.randint(1,100)
+
+case()

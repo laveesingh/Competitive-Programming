@@ -2,16 +2,15 @@ from math import acos, sqrt, pi
 from itertools import permutations
 
 def orientation(a, b, c):
-	if a[0] == b[0] == c[0]: return 0
-	if b[0] == a[0]:
-		return -1
-	if b[0] == c[0]:
+	"""
+	-1 => counter clock wise
+	1 => clockwise
+	"""
+	val = (b[1]-a[1])*(c[0]-b[0]) - (b[0]-a[0])*(c[1]-b[1])
+	if val == 0: return 0
+	if val > 0:
 		return 1
-	sigma = float(b[1]-a[1])/float(b[0]-a[0])
-	tou = float(c[1]-b[1])/float(c[0]-b[0])
-	if tou > sigma: return 1
-	if tou < sigma: return -1
-	return 0
+	return -1
 
 def isangle(a, b, c):
 	angle = acos(float((a[0]-b[0])*(c[0]-b[0]) + (a[1]-b[1])*(c[1]-b[1]))/
@@ -39,11 +38,20 @@ for i in xrange(len(points)-3):
 				b = points[j]
 				c = points[k]
 				d = points[l]
+				# print a, b, c, d
 				tod = 0
 				for perm in permutations((a, b, c, d)):
 					ai, bj, ck, dl = list(perm)
-					if orientation(a, b, c) == -1 and orientation(b,c,d) == 1 and isangle(a,b,c) and isangle(b,c,d):
+					# print ai, bj, ck, dl
+					# print "orientation a, b, c: ", orientation(ai, bj, ck), "orientation b,c,d:",orientation(bj,ck,dl)
+					if orientation(ai, bj, ck) == 1 and orientation(bj,ck,dl) == -1 and isangle(ai,bj,ck) and isangle(bj,ck,dl):
+						# print "Here"
 						tod += 1
 				count += tod/2
 
+print count
 
+# a=(2, 0)
+# b=(2,2)
+# c=(0,0)
+# print orientation(a, b, c)

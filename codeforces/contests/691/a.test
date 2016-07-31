@@ -1,0 +1,16 @@
+
+import random
+
+def case():
+	a = [1]*50
+	a.insert(10,0)
+	t = 1000
+	print t
+	for _ in xrange(t):
+		n = random.randint(1,100)
+		print n
+		for __ in xrange(n):
+			print random.choice(a),
+		print
+
+case()
