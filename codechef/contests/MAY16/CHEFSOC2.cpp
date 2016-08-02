@@ -1,67 +1,52 @@
-#include <iostream>
-#include <deque>
-#include <utility>
-#include <map>
-
-#define pii pair<int, int>
-#define mp make_pair
+#include <bits/stdc++.h>
 
 using namespace std;
 
-int N, M, s;
-int *A;
-deque<pii> q;
-map<int, int> f;
+#define mod 1000000007
 
-// void solve(int N, int M, int s, int A[]){
-void solve(){
-	pii cur;
-	int dog, m;
+int n, m, s;
+int **dp, *a;
 
-	q.push_back(mp(s,0));
-	while(!q.empty()){
-		cur = q.front();
-		q.pop_front();
-		dog = cur.first;
-		m = cur.second;
-		// cout << "DOG: " << dog << " turn: " << m;
-		if (m == M){
-			f[dog] += 1;
-		}else if(m < M){
-			if (dog+A[m] <= N){
 
-				q.push_back(mp(dog+A[m], m+1));
-				// cout << "Appending dog: " << dog+A[m] << " ";
-			}
-			if (dog-A[m] > 0){
-				q.push_back(mp(dog-A[m], m+1));
-				// cout << "Appending dog : " << dog-A[m] << " ";
-			}
-		}
-		// cout << endl;
-	}
-	for (int i = 1; i <= N; i += 1){
-		cout << f[i] << " ";
-	}
-	cout << endl;
-}
 
 int main(void){
-	// int t, N, M, s;
+	ios::sync_with_stdio(false);
 	int t;
 	cin >> t;
-	while (t--){
-		q.clear();
-		f.clear();
-		cin >> N >> M >> s;
-		// int A[M];
-		A = new int[M];
-		for (int i = 0; i < M; i += 1){
-			cin >> A[i];
+	while(t--){
+		cin >> n >> m >> s;
+		s -= 1;
+		a = new int[m];
+		for(int i = 0; i < m; i += 1){
+			cin >> a[i];
 		}
-		// solve(N, M, s, A);
-		solve();
-		delete[] A;
+		dp = new int*[n];
+		for (int i = 0; i < n; i +=1){
+			dp[i] = new int[m+1];
+			fill_n(dp[i], m, 0);
+		}
 
+		for (int j = 0; j <= m; j += 1){
+			for (int i = 0; i < n; i += 1){
+				if(j == 0){
+					dp[i][j] = s==i;
+					// cout << "dp[i][0] is set to " << dp[i][j] << endl;
+				}else{
+					if(i-a[j-1]>=0) dp[i][j] += dp[i-a[j-1]][j-1];
+					if(i+a[j-1]<n) dp[i][j] += dp[i+a[j-1]][j-1];
+					dp[i][j] %= mod;
+				}
+			}
+		}
+		// for (int i = 0; i < n; i += 1){
+		// 	for (int j = 0; j <= m; j += 1){
+		// 		cout << dp[i][j] << " ";
+		// 	}
+		// 	cout << endl;
+		// }
+		for (int i = 0; i < n; i += 1){
+			cout << dp[i][m] << " ";
+		}
+		cout << endl;
 	}
 }

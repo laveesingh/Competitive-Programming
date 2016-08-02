@@ -1,8 +1,10 @@
 import java.io.*;
+import java.util.*;
 
-public class input_taking{
+public class Main{
 	public static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	
+
 	public static int[] intarrinp()throws IOException{
 		String temp[]  = br.readLine().split(" ");
 		int n = temp.length;
@@ -27,8 +29,10 @@ public class input_taking{
 	}
 
 	public static void main(String args[])throws IOException{
-		int a = input();
-		System.out.println(a);
+		int n = input();
+		String a[] = strarrinp();
+		Arrays.sort(a);
 	}
 
 }
+

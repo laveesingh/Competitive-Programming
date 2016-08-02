@@ -1,0 +1,15 @@
+import random
+
+def case():
+	t = random.randint(1,10)
+	print t
+	for _ in xrange(t):
+		n = random.randint(1,1000)
+		m = random.randint(1,1000)
+		s = random.randint(1,n)
+		print n,m,s
+		for __ in xrange(m):
+			print random.randint(1,100),
+		print
+
+case()
