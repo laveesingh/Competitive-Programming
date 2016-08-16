@@ -1,43 +1,70 @@
-#include <cstdio>
-#include <set>
-#include <stack>
-// #include <algorithm>
+/*input
+2
+
+6
+
+A 10
+
+A 5
+
+Q
+
+A 100
+
+R
+
+Q
+
+6
+
+A 5
+
+Q
+
+R
+
+Q
+
+R
+
+R
+*/
+
+#include <bits/stdc++.h>
 
 using namespace std;
 
 int main(void){
+	ios::sync_with_stdio(false);
 	int t;
-	scanf("%d", &t);
-	for(int j = 1; j <=t; j +=1){
-		printf("Case %d:\n",j);
-		int n, mango, lmango;
-		scanf("%d", &n);
+	cin >> t;
+	for (int j = 1; j <= t; j += 1){
 		multiset<int> basket;
-		multiset<int>::iterator it, it2;
-		stack<int> nbig;
-		char temp[2];
+		stack<int> latest;
+		int n;
+		cin >> n;
+		char type;
+		int x;
+		cout << "Case " << j << ":" << endl;
 		for (int i = 0; i < n; i += 1){
-			scanf("%s", temp);
-			if (temp[0] == 'A') {
-				scanf("%d", &mango);
-				basket.insert(mango);
-				nbig.push(mango);
-			}else if(temp[0] == 'R'){
-				if(!basket.empty()){
-					lmango = nbig.top();
-					nbig.pop();
-					it = basket.find(lmango);
-					it2 = it;
-					it2++;
-					basket.erase(it, it2);
+			cin >> type;
+			if (type == 'A'){
+				cin >> x;
+				basket.insert(x);
+				latest.push(x);
+			}else if(type == 'R'){
+				if (!latest.empty()){
+					int temp = latest.top();
+					latest.pop();
+					basket.erase(temp);
 				}
 			}else{
-				if(basket.empty()){
-					printf("Empty\n");
+				if (latest.empty()){
+					cout << "Empty" << endl;
 				}else{
-					printf("%d\n", *basket.rbegin());
+					cout << *(basket.rbegin()) << endl;
 				}
 			}
 		}
-	}
+	}	
 }

@@ -1,21 +1,32 @@
-#include <iostream>
+/*input
+2
+5 1 5 1
+10 2 2 2
+*/
+
+#include <bits/stdc++.h>
 
 using namespace std;
 
-bool solve(int l, int d, int s, int c){
-	unsigned long long ans = s;
-	while (d-- > 1){
-		ans += ans * c;
-		if (ans >= l) return true;
-	}
-	return ans >= l ? true : false;
-}
+#define ll long long
+
 int main(void){
-	int t;
-	int l, d, s,c;
+	ios::sync_with_stdio(false);
+	ll t, l, d, s, c, likes;
 	cin >> t;
-	while (t--){
+	string ans;
+	while(t--){
 		cin >> l >> d >> s >> c;
-		cout << (solve(l, d, s, c) ? "ALIVE AND KICKING" : "DEAD AND ROTTING") << endl;
+		ans = l > s ? "DEAD AND ROTTING" : "ALIVE AND KICKING";
+		while(d > 1){
+			s *= (1+c);
+			if (s >= l){
+				ans = "ALIVE AND KICKING";
+				break;
+			}
+			d -= 1;
+		}
+		cout << ans << endl;
 	}
+
 }

@@ -1,0 +1,18 @@
+from random import randint, choice
+
+choose = [0]*10
+choose += [1]
+
+def case():
+	n = randint(1, 500)
+	print n
+	for i in xrange(n):
+		for j in xrange(n):
+			print choice(choose),
+		print
+	m = randint(1,500)
+	print m
+	for i in xrange(m):
+		print randint(10**6, 10**7), randint(1,n)
+
+case()

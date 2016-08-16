@@ -32,6 +32,7 @@ public class Main{
 		int n = input();
 		String a[] = strarrinp();
 		Arrays.sort(a);
+		
 	}
 
 }

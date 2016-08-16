@@ -29,7 +29,7 @@ int main(void){
 	x = stoi(xs);
 	// cout << "x: " << x << endl;
 	int cnt = 0;
-	for (int i = 1; i <= x; i += 1){
+	for (int i = 1; i < x; i += 1){
 		if(isir(i)){
 			// cout << i << endl;
 			cnt++;

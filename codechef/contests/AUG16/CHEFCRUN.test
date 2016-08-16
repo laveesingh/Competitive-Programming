@@ -1,0 +1,16 @@
+from random import randint
+
+def case():
+	t = randint(1,5)
+	print t
+	for _ in xrange(t):
+		n = randint(2,10)
+		print n
+		for __ in xrange(n):
+			print randint(-100, 100),
+		print
+		st = randint(1,n-1)
+		en = randint(st+1,n)
+		print st,en
+
+case()

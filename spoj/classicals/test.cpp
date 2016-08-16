@@ -1,10 +1,11 @@
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define what_is(x) cerr << #x << " is " << x << endl;
-
 int main(void){
-	int variable = 234;
-	cout << __builtin_ffs(8) << endl;
+	ios::sync_with_stdio(false);
+	int a[] = {2, 3, 4};
+	for (int x: a){
+		cout << x << endl;
+	}	
 }
