@@ -1,11 +1,8 @@
 /*input
-6
--45 22 42 -16
--41 -27 56 30
--36 53 -37 77
--36 30 -75 -46
-26 -38 -10 62
--32 -54 -6 45
+3 
+0 0 0 0 
+0 0 0 0 
+-1 -1 1 1
 */
 
 #include <bits/stdc++.h>
@@ -36,6 +33,11 @@ int main(void){
 		}
 	}
 	sort(ab.begin(), ab.end());
+	// cout << "Here's the ab array: " << endl;
+	// for (int i = 0; i < n*n; i+= 1){
+	// 	cout << ab[i] << " ";
+	// }
+	// cout << endl;
 
 	vector<int> cd(n*n);
 	k = 0;
@@ -45,25 +47,31 @@ int main(void){
 		}
 	}
 	sort(cd.begin(), cd.end());
+	// cout << "Here's the cd array: " << endl;
+	// for (int i = 0; i < n*n; i += 1){
+	// 	cout << cd[i] << " ";
+	// }
+	// cout << endl;
 
 	int count = 0;
 	int i = 0, j = (n*n)-1;
 	while (i < n*n and j >= 0){
 		// cout << "Stuck in while" << i << " " << j << endl;
 		if (ab[i]+cd[j] > 0){
-			cout << "F" << endl;
+			// cout << "F" << endl;
 			j--;
 		}else if(ab[i]+cd[j] < 0){
-			cout << "S" << endl;
+			// cout << "S" << endl;
 			i++;
 		}else{
-			cout << i << ": " << i << "a[i]: " << a[i] << " a[i+1]: " << a[i+1] << endl;
 			x = 1, y = 1;
-			while(i < (n*n-1) and a[i] == a[i+1]){
+			i++;
+			j--;
+			while(i < n*n and ab[i] == ab[i-1]){
 				i++;
 				x++;
 			}
-			while(j >= 1 and b[j] == b[j-1]){
+			while (j >= 0 and cd[j] == cd[j+1]){
 				j--;
 				y++;
 			}

@@ -3,15 +3,15 @@ from random import *
 opt = ['A', 'A', 'A', 'Q', 'R']
 
 def case():
-	t = 25
+	t = 5
 	print t
 	for _ in xrange(t):
-		n = 100000
+		n = 100
 		print n
 		for __ in xrange(n):
 			x = choice(opt)
 			if x == 'A':
-				print x, randint(1,10000)
+				print x, randint(1,100)
 			else:
 				print x
 
