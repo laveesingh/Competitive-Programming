@@ -1,5 +1,9 @@
 /*input
-
+2
+4
+1111
+5
+10001
 */
 
 #include <bits/stdc++.h>
@@ -28,15 +32,24 @@ using namespace std;
 #define duwginp(g,m) F(i,m){cin>>x>>y; g[x].psb(y);}
 #define printgraph(g,n) for(int i = 1; i <= n; i += 1){cout<< endl<<i<<": "; for(int adj:g[i]) cout << adj <<" ";} cout << endl
 
+#define ll long long
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
+	ll t;
+	cin >> t;
+	while(t--){
+		ll n;
+		cin >> n;
+		string a;
+		cin >> a;
+		ll one = 0;
+		for(char x: a){
+			if (x == '1'){
+				one++;
+			}
 		}
-		cout <<endl;
+		cout << (one*(one+1))/2 << endl;
 	}
 	
 }

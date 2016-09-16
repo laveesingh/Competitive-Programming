@@ -1,0 +1,12 @@
+import random
+
+def case():
+	n = random.randint(2,500)
+	p = random.randint(1,n-1)
+	print n,p
+	for i in xrange(n):
+		for j in xrange(n):
+			print random.randint(1,10**9),
+		print
+
+case()

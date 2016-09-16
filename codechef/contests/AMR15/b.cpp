@@ -1,5 +1,9 @@
 /*input
-
+4
+3 2 1 4
+2
+0
+2
 */
 
 #include <bits/stdc++.h>
@@ -31,12 +35,24 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
-		}
-		cout <<endl;
+	int n;
+	cin >> n;
+	int a[n];
+	inp(a,n);
+	sort(a, a+n);
+	int dp[n];
+	dp[0]=a[0];
+	for (int i = 1; i < n; i += 1){
+		dp[i] = dp[i-1]+a[i];
+	}
+	int q;
+	cin >> q;
+	for(int i = 0; i < q; i += 1){
+		int k; 
+		cin >> k;
+		if(k > n-1) k = n-1;
+		int ind = n/(k+1) + (n%(k+1) > 0);
+		cout << dp[ind-1] << endl;
 	}
 	
 }

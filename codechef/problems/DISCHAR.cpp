@@ -1,5 +1,7 @@
 /*input
-
+2
+abc
+aba
 */
 
 #include <bits/stdc++.h>
@@ -31,12 +33,13 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
-		}
-		cout <<endl;
+	int t;
+	cin >> t;
+	while(t--){
+		string a;
+		cin >> a;
+		set<char> x(a.begin(), a.end());
+		cout << x.size() << endl;
 	}
 	
 }

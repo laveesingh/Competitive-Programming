@@ -1,5 +1,8 @@
 /*input
-
+1
+3 10
+3 4 5
+4 4 5
 */
 
 #include <bits/stdc++.h>
@@ -28,15 +31,22 @@ using namespace std;
 #define duwginp(g,m) F(i,m){cin>>x>>y; g[x].psb(y);}
 #define printgraph(g,n) for(int i = 1; i <= n; i += 1){cout<< endl<<i<<": "; for(int adj:g[i]) cout << adj <<" ";} cout << endl
 
-
+#define ll long long
 int main(void){
-	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
+		ios::sync_with_stdio(false);
+	ll t;
+	cin >> t;
+	while(t--){
+		ll n, k;
+		cin >>n >> k;
+		ll ans = 0;
+		ll a[n], b[n];
+		inp(a,n);
+		inp(b,n);
+		F(i,n){
+			ans = max(ans, (k/a[i])*b[i]);
 		}
-		cout <<endl;
+		cout << ans << endl;
 	}
 	
 }

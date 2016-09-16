@@ -1,5 +1,8 @@
 /*input
-
+3
+a.ba
+cb.bc
+a.b
 */
 
 #include <bits/stdc++.h>
@@ -19,7 +22,6 @@ using namespace std;
 #define psb push_back
 #define ppb pop_back
 #define mp make_pair
-#define init(a, n) a.find(n) != a.end()
 #define F(i,n) for (int i = 0; i < n; i += 1)
 #define inp(a,n) F(i,n) cin>>a[i]
 #define print(a,n) F(i,n) {cout << a[i] << " ";} cout << endl
@@ -31,12 +33,32 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
+	int t;
+	cin >> t;
+	while(t--){
+		string a;
+		cin >> a;
+		int n = a.length();
+		bool flag = true;
+		for (int i = 0; i <= n/2; i += 1){
+			// cout << i << endl;
+			int j = n-i-1;
+			if(a[i] == '.' and a[j] == '.'){
+				a[i] = 'a';
+				a[j] = 'a';
+			}else if (a[i] == '.'){
+				a[i] = a[j];
+			}else if (a[j] == '.'){
+				a[j] = a[i];
+			}else if (a[i] != a[j]){
+				flag = false;
+				break;
+			}
 		}
-		cout <<endl;
+		if (!flag){
+			cout << -1 << endl;
+		}else{
+			cout << a << endl;
+		}
 	}
-	
 }

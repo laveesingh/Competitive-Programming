@@ -1,5 +1,7 @@
 /*input
-
+2
+101
+11
 */
 
 #include <bits/stdc++.h>
@@ -19,7 +21,6 @@ using namespace std;
 #define psb push_back
 #define ppb pop_back
 #define mp make_pair
-#define init(a, n) a.find(n) != a.end()
 #define F(i,n) for (int i = 0; i < n; i += 1)
 #define inp(a,n) F(i,n) cin>>a[i]
 #define print(a,n) F(i,n) {cout << a[i] << " ";} cout << endl
@@ -31,12 +32,20 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
+	int t;
+	cin >> t;
+	while (t--){
+		int freq[2];
+		freq[0] = freq[1] = 0;
+		string a;
+		cin >> a;
+		for (char x: a){
+			freq[x-'0'] += 1;
 		}
-		cout <<endl;
+		if (freq[0] == 1 or freq[1] == 1){
+			cout << "Yes" << endl;
+		}else{
+			cout << "No" << endl;
+		}
 	}
-	
 }

@@ -1,5 +1,6 @@
 /*input
-
+5
+1 2 3 4 5
 */
 
 #include <bits/stdc++.h>
@@ -31,12 +32,19 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
-		}
-		cout <<endl;
+	int n;
+	cin >> n;
+	int a[n];
+	inp(a,n);
+	int parity[2];
+	parity[0] = parity[1] = 0;
+	F(i,n){
+		parity[a[i]%2] += 1;
+	}
+	if(parity[0] > parity[1]){
+		cout << "READY FOR BATTLE"  << endl;
+	}else{
+		cout << "NOT READY" << endl;
 	}
 	
 }

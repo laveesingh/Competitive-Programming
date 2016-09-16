@@ -19,7 +19,6 @@ using namespace std;
 #define psb push_back
 #define ppb pop_back
 #define mp make_pair
-#define init(a, n) a.find(n) != a.end()
 #define F(i,n) for (int i = 0; i < n; i += 1)
 #define inp(a,n) F(i,n) cin>>a[i]
 #define print(a,n) F(i,n) {cout << a[i] << " ";} cout << endl
@@ -31,12 +30,5 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
-		}
-		cout <<endl;
-	}
 	
 }

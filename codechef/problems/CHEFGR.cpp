@@ -1,5 +1,11 @@
 /*input
-
+3
+5 7
+3 3 4 2 1
+5 6
+3 3 4 2 1
+5 8
+3 3 4 2 1
 */
 
 #include <bits/stdc++.h>
@@ -31,12 +37,24 @@ using namespace std;
 
 int main(void){
 	ios::sync_with_stdio(false);
-	int ispair[4][4]={{0}};
-	F(i,4){
-		F(j,4){
-			cout << ispair[i][j] << " ";
+	int t;
+	cin >> t;
+	while(t--){
+		int n, m;
+		cin >> n >> m;
+		int a[n];
+		inp(a,n);
+		int mx = *max_element(a,a+n);
+		int req = 0;
+		F(i,n){
+			req += mx-a[i];
 		}
-		cout <<endl;
+		m -= req;
+		if (m >= 0 and m%n==0){
+			cout << "Yes" << endl;
+		}else{
+			cout << "No" << endl;
+		}
 	}
 	
 }
