@@ -2,67 +2,137 @@
 
 using namespace std;
 
-#define pii pair<int, int>
+typedef pair<int, int> pii;
+typedef vector<int> vi;
+typedef vector<vi> vvi;
+typedef pair<pii, int> piii;
+typedef map<int, int> mii;
+typedef deque<int> di;
 
+typedef long long ll;
+typedef pair<ll, ll> pll;
+typedef vector<ll> vl;
+typedef vector<vl> vvl;
+typedef pair<pll, ll> plll;
+typedef map<ll, ll> mll;
+typedef deque<ll> dl;
 
-int X[4] = {-1, 0, 1, 0};
-int Y[4] = {0, -1, 0, 1};
-int r, c;
-int **visited, **ans;
-char **maze;
+#define F(i, n) for(ll i = 0; i < n; i += 1)
+#define PRINT(a,n) for(ll i = 0; i < n; i += 1){ cout << a[i] << " ";} cout<<endl;
+#define arrinp(a,n) for(ll i = 0; i < n; i += 1) cin >> a[i];
+#define init(a,n) a.find(n) != a.end()
+#define Front(a) *(a.begin())
+#define Back(a) *(a.rbegin())
+#define Index(a, x) a.find(x) - a.begin()
 
-bool isvalid(int i, int j){
-    if (i >= r or j >= c) return false;
-    if (i < 0 or j < 0) return false;
-    return true;
-}
-
-void dfs(pii cur){
-    int x = cur.first;
-    int y = cur.second;
-    for (int i = 0; i < 4; i += 1){
-        if (isvalid(x+X[i], y+Y[i]) and maze[x+X[i]][y+Y[i]] == '.' and !visited[x+X[i]][y+Y[i]]){
-            visited[x+X[i]][y+Y[i]] = 1;
-            dfs({x+X[i], y+Y[i]});
-        }
-    }
-    for (int i = 0; i < 4; i += 1){
-        ans[x][y] = max(ans[x][y], ans[x+X[i]][y+Y[i]]);
-    }
-}
+const int inf = INT_MAX;
 
 int main(void){
-    int t;
-    cin >> t;
-    while(t--){
-        cin >> c >> r;
-        visited = new int*[r];
-        ans = new int*[r];
-        maze = new int*[r];
-        for (int i = 0; i < r; i += 1){
-            visited[i] = new int[c];
-            ans[i] = new int[c];
-            maze[i] = new char[c];
-        }
-        for (int i = 0; i < r; i += 1){
-            for (int j = 0; j < c; j++){
-                cin >> maze[i][j];
-            }
-        }
-        for (int i = 0; i < r i += 1){
-            fill_n(visited[i], c, 0);
-        }
-        for (int i = 0; i < r; i += 1){
-            for (int j = 0; j < c; j++){
-                ans[i][j] = (maze[i][j] == '#' ? -1 : 0);
-            }
-        }
+	ios::sync_with_stdio(false);
+	int t;
+	cin >> t;
+	while(t--){
+		int R, C;
+		cin >> C >> R;
+		char LAB[R][C];
+		int dist[R][C];
+		int sti = 0, stj = 0;
+		F(i,R){
+			F(j,C){
+				cin >> LAB[i][j];
+				if (LAB[i][j] == '#'){
+					dist[i][j] = -1;
+				}else{
+					dist[i][j] = 0;
+					sti = i;
+					stj = j;
+				}
+			}
+		}
+		queue<pii> Q;
+		Q.push({sti, stj});
+		int X[] = {1, 0, -1, 0};
+		int Y[] = {0, 1, 0, -1};
+		int vis[R][C];
+		memset(vis, 0, sizeof(int)*(R*C));
+		dist[sti][stj] = 0;
+		vis[sti][stj] = 1;
+		#ifdef DEBUG
+			cerr << "First starting point is " << sti << "," << stj << endl;
+		#endif
+		while(!Q.empty()){
+			pii cur = Q.front();
+			Q.pop();
+			for(int i = 0;i < 4; i += 1){
+				int newi = cur.first + X[i];
+				int newj = cur.second + Y[i];
+				if (newi >= 0 and newj >= 0 and newi < R and newj < C){
+					if(not (vis[newi][newj]) and LAB[newi][newj] == '.'){
+						dist[newi][newj] = dist[cur.first][cur.second]+1;
+						#ifdef DEBUG
+							cout << dist[cur.first][cur.second] << "=>" << dist[newi][newj] << endl;
+						#endif
+						Q.push({newi, newj});
+						vis[newi][newj] = 1;
+					}
+				}
+			}
 
-        for (int i = 0; i < r; i += 1){
-            for (int j = 0; j < c; j += 1){
-                if (ans[i][j] == 0 and not visited[i][j]){
-                    visited[i][j] = 1;     
-            }
-        }
-    }
+		}
+		#ifdef DEBUG
+			cerr << "The first distance matrix is as follows: " << endl;
+			F(i,R){
+				F(j,C){
+					cerr << dist[i][j] << " ";
+				}
+				cerr << endl;
+			}
+		#endif
+		int maxi = 0, maxj = 0;
+		F(i,R){
+			F(j,C){
+				if(dist[i][j] > dist[maxi][maxj]){
+					maxi = i;
+					maxj = j;
+				}
+			}
+		}
+		memset(vis, 0, sizeof(int)*(R*C));
+		memset(dist, 0, sizeof(int)*(R*C));
+		Q = queue<pii>();
+		Q.push({maxi, maxj});
+		dist[maxi][maxj] = 0;
+		vis[maxi][maxj] = 1;
+		int maxans = 0;
+		#ifdef DEBUG
+			cerr << "Second starting point is " << maxi << "," << maxj << endl;
+		#endif
+		while (!Q.empty()){
+			pii cur = Q.front();
+			Q.pop();
+			for(int i = 0;i < 4; i += 1){
+				int newi = cur.first + X[i];
+				int newj = cur.second + Y[i];
+				if (newi >= 0 and newj >= 0 and newi < R and newj < C){
+					if(not (vis[newi][newj]) and LAB[newi][newj] == '.'){
+						dist[newi][newj] = dist[cur.first][cur.second]+1;
+						maxans = max(maxans, dist[newi][newj]);
+						Q.push({newi, newj});
+						vis[newi][newj] = 1;
+					}
+				}
+			}
+		}
+		#ifdef DEBUG
+			cerr << "The second distance matrix is as follows: " << endl;
+			F(i,R){
+				F(j,C){
+					cerr << dist[i][j] << " ";
+				}
+				cerr << endl;
+			}
+		#endif
+		cout << "Maximum rope length is " << maxans << "." << endl;
+	}
 }
+
