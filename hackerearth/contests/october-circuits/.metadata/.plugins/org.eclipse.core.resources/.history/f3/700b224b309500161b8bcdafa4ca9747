@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.Arrays;
+
+public class MancunianPalindromia {
+	static char[] temp, temp2;
+	static boolean ispal(char[] a){
+		for (int i = 0; i < a.length/2; i += 1){
+			if (a[i] != a[a.length-i-1]) return false;
+		}
+		return true;
+	}
+	static void rev(int i, int j){
+		int k = i, l = j;
+		while (k < l){
+			char tmp = temp[k];
+			temp[k] = temp[l];
+			temp[l] = tmp;
+			k++;l--;
+		}
+	}
+	static void rev2(int i, int j){
+		for(int k = i; k <= (i+j)/2; k++){
+			char tmp = temp2[k];
+			temp2[k] = temp2[j-k+i];
+			temp2[j-k+1] = tmp;
+		}
+	}
+	static boolean solve(String a){
+		for(int i = 0; i < a.length()-1; i += 1){
+			for (int j = i+1; j < a.length(); j += 1){
+				temp = a.toCharArray();
+				System.out.print("Revering " + i + " " + j + " => ");
+				rev(i,j);
+				System.out.println(new String(temp));
+				if(ispal(temp)) return true;
+				for(int k = j+1; k < a.length(); k += 1){
+					for (int l = k+1; l < a.length(); l += 1){
+						temp2 = temp.clone();
+						System.out.println("Before reverseing " + new String(temp2));
+						rev2(k,l);
+						System.out.println("After reverseing " + new String(temp2));
+						if (ispal(temp2)){
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
+	public static void main(String args[])throws IOException{
+		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+		String []sarr = input.readLine().split(" ");
+		int n = Integer.parseInt(sarr[0]);
+		int suc = 0;
+		for(int c = 0; c < n; c += 1){
+			String a = input.readLine();
+			if (solve(a)) suc++;
+		}
+	}
+}

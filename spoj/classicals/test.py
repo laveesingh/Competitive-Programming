@@ -1,18 +1,11 @@
-from random import *
-
-opt = ['A', 'A', 'A', 'Q', 'R']
+import random
 
 def case():
-	t = 5
+	t = random.randint(1,100)
 	print t
 	for _ in xrange(t):
-		n = 100
-		print n
-		for __ in xrange(n):
-			x = choice(opt)
-			if x == 'A':
-				print x, randint(1,100)
-			else:
-				print x
+		n = random.randint(1,10**8)
+		k = random.randint(2,10**8)
+		print n,k
 
 case()
