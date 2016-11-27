@@ -2,18 +2,14 @@
 
 using namespace std;
 
-#define ZERO(a) memset(a,-1,sizeof(a))
-
-int square(int a[], int n){
-	for(int i = 0; i < n; i += 1) a[i] *= a[i];
-}
+int store[10][10];
 
 int main(void){
 	int n;
 	cin >> n;
-	int a[n];
-	for(int i = 0; i < n; i += 1) a[i] = i;
-	square(a, n);
-	for(int i = 0; i < n; i += 1) cout << a[i] << " ";;
-	cout << endl;
+	memset(store, -1, sizeof(store));
+	for(int i = 0; i < 10; i += 1){
+		for(int j = 0; j < 10; j += 1) cout << store[i][j] << " ";
+		cout << endl;
+	}
 }
