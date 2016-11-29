@@ -7,37 +7,64 @@ using namespace std;
 #define olong(a) printf("%lld\n", a)
 #define istr(a) scanf("%s", a)
 #define ostr(a) printf("%s\n",a)
-#define pii pair<int, int>
-#define mp make_pair
+
+const int N = 1e5+1;
+int par[N];
+vector<int> tree[N];
+int store[N][2];
+
+
+void dfs(int i, int prev){
+	for(int child: tree[i])
+		if(child != prev){
+			par[child] = i;
+			dfs(child, i);
+		}
+}
+
+int solve(int i, int state){
+	if(store[i][state]) return store[i][state];
+	if (state == 0){
+		int flag = 0;
+		int ret = 0;
+		for(int child: tree[i])
+			if(child != par[i]){
+				flag = 1;
+				if(!store[child][1]) store[child][1] = solve(child, 1);
+				ret += store[child][1];
+			}
+		if (flag == 0) return 0;
+		else return ret;
+	}else{
+		int flag = 0, ret = 0;
+		for(int child: tree[i])
+			if(child != par[i]){
+				if(!store[child][1]) store[child][1] = solve(child, 1);
+				if(!store[child][0]) store[child][0] = solve(child, 0);
+				ret += min(store[child][1], store[child][0]);
+				flag = 1;
+			}
+		if(flag == 0) return 1;
+		else return ret+1;
+	}
+}
+			
 
 int main(void){
 	int n, x, y;
 	iint(n);
-	vector<int> tree[n+1];
-	int degree[n+1], marked[n+1];
-	memset(degree, 0, sizeof(degree));
-	memset(marked, 0, sizeof(marked));
-	for(int i = 0; i < n-1; i += 1){
+	for(int i = 0; i < n-1; i++){
 		iint(x);
 		iint(y);
 		tree[x].push_back(y);
 		tree[y].push_back(x);
-		degree[x]++;
-		degree[y]++;
 	}
-	set<pii> nodes;
-	for(int i = 1; i <= n; i += 1)
-		nodes.insert(mp(degree[i], i));
-	for(set<pii>::iterator it = nodes.begin(); it != nodes.end(); it++){
-		pii cur = *it;
-		int x = cur.second;
-		if(marked[x]) continue;
-		for(int y : tree[x])
-			marked[y] = 1;
-	}
-	int ans = 0;
-	for(int i = 1; i <= n; i += 1)
-		ans += marked[i];
+	par[1] = -1;
+	dfs(1, -1);
+	memset(store, 0, sizeof(store));
+	int ans = solve(1, 0);
+	memset(store, 0, sizeof(store));
+	ans = min(ans, solve(1, 1));
 	oint(ans);
 }
 
