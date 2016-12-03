@@ -1,0 +1,5 @@
+alias g++='g++ -std=c++11 -o a'
+alias spojc='python -m spojbot -u lavee_singh -p L4v330n1yiAB@4 -l 44 '
+alias spojp='python -m spojbot -u lavee_singh -p L4v330n1yiAB@4 -l 4 '
+alias spojj='python -m spojbot -u lavee_singh -p L4v330n1yiAB@4 -l 10 '
+
