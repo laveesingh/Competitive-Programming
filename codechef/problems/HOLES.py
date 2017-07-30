@@ -1,1 +1,0 @@
-exec('a=raw_input();print len([s for s in a if s in "ADOPQR"])+a.count("B")*2;'*input())
