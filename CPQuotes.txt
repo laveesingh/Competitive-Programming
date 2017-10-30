@@ -1,4 +1,4 @@
 Followings are some motivational quotes for a competitive programmer:
 1. AC consists of going from WA to WA without loss of enthusiasm.
-2. CP = DP. That means a Competitive programmer is as good as his/hers Dynamic Programming.
+2. CP = DP. That means a Competitive programmer is as good as his/her Dynamic Programming.
 
